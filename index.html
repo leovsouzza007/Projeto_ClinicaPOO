@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedLife Campina Grande</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --verde: #757575;
+  --verde-escuro: #4a4a4a;
+  --verde-claro: #9e9e9e;
+  --verde-bg: #f5f5f5;
+  --verde-leve: #fafafa;
+  --branco: #ffffff;
+  --cinza-bg: #f7f7f7;
+  --cinza-borda: #e0e0e0;
+  --texto: #1a1a1a;
+  --texto-leve: #5a5a5a;
+  --laranja: #f47920;
+  --sombra: rgba(0,0,0,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Sora', sans-serif;
+  background: var(--branco);
+  color: var(--texto);
+  overflow-x: hidden;
+}
+
+/* ===== TOPBAR ===== */
+.topbar {
+  background: var(--verde-escuro);
+  color: rgba(255,255,255,0.75);
+  font-size: 0.75rem;
+  padding: 6px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.topbar a { color: rgba(255,255,255,0.85); text-decoration: none; }
+.topbar a:hover { color: #fff; }
+.topbar-links { display: flex; gap: 18px; flex-wrap: wrap; }
+
+/* ===== HAMBURGER ===== */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 4px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--verde-escuro);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+.hamburger.aberto span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.aberto span:nth-child(2) { opacity: 0; }
+.hamburger.aberto span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ===== NAVBAR ===== */
+nav {
+  background: var(--branco);
+  padding: 0 40px;
+  display: flex;
+  align-items: stretch;
+  box-shadow: 0 2px 16px var(--sombra);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  flex-wrap: wrap;
+}
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  margin-right: 40px;
+  text-decoration: none;
+}
+.logo-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--verde);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.logo-icon svg { width: 28px; height: 28px; fill: white; }
+.logo-text { font-size: 1rem; font-weight: 800; color: var(--verde); line-height: 1.2; }
+.logo-text span { display: block; font-size: 0.72rem; font-weight: 400; color: var(--texto-leve); }
+
+.nav-links {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  flex: 1;
+}
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--texto-leve);
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.nav-link:hover, .nav-link.ativo {
+  color: var(--verde);
+  border-bottom-color: var(--verde);
+}
+
+.nav-cta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 0 0 24px;
+  margin-left: auto;
+}
+.btn-outline {
+  border: 2px solid var(--verde);
+  color: var(--verde);
+  background: transparent;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-family: 'Sora', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn-outline:hover { background: var(--verde); color: #fff; }
+.btn-solid {
+  background: var(--verde);
+  color: #fff;
+  border: 2px solid var(--verde);
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-family: 'Sora', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn-solid:hover { background: var(--verde-escuro); border-color: var(--verde-escuro); }
+
+/* Mobile nav drawer */
+.nav-mobile {
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  background: var(--branco);
+  border-top: 1px solid var(--cinza-borda);
+  padding: 8px 0 16px;
+}
+.nav-mobile.aberto { display: flex; }
+.nav-mobile .nav-link {
+  padding: 14px 20px;
+  border-bottom: none;
+  border-left: 3px solid transparent;
+  font-size: 0.9rem;
+}
+.nav-mobile .nav-link:hover, .nav-mobile .nav-link.ativo {
+  border-left-color: var(--verde);
+  border-bottom-color: transparent;
+  background: var(--verde-leve);
+}
+.nav-mobile-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 20px 0;
+}
+.nav-mobile-cta .btn-outline,
+.nav-mobile-cta .btn-solid {
+  text-align: center;
+  display: block;
+  padding: 12px;
+}
+
+/* ===== ALERTA ===== */
+.alerta-banner {
+  background: #fff3cd;
+  border-left: 4px solid #f5a623;
+  padding: 12px 40px;
+  font-size: 0.82rem;
+  color: #6b4a0b;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.alerta-banner strong { color: #8a5500; }
+.alerta-icon { flex-shrink: 0; margin-top: 1px; }
+
+/* ===== HERO ===== */
+.hero {
+  background: linear-gradient(135deg, var(--verde-escuro) 0%, var(--verde) 55%, #9e9e9e 100%);
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 60px 40px;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  right: -60px;
+  top: -60px;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  right: 120px;
+  bottom: -100px;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+  pointer-events: none;
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  flex: 1 1 300px;
+  animation: fadeUp 0.7s ease both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(4px);
+  color: rgba(255,255,255,0.9);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 50px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.hero h1 {
+  font-family: 'Lora', serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 18px;
+  font-weight: 600;
+}
+.hero h1 em { font-style: italic; color: rgba(255,255,255,0.85); }
+.hero p {
+  color: rgba(255,255,255,0.8);
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.65;
+  margin-bottom: 32px;
+  max-width: 480px;
+}
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn-hero-primary {
+  background: #fff;
+  color: var(--verde);
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.2s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+.btn-hero-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.2); }
+.btn-hero-secondary {
+  background: transparent;
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border: 2px solid rgba(255,255,255,0.5);
+  transition: all 0.2s;
+}
+.btn-hero-secondary:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
+
+.hero-stats {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+  animation: fadeUp 0.9s 0.2s ease both;
+  flex-shrink: 0;
+}
+.stat-item { text-align: center; }
+.stat-num { font-size: 2rem; font-weight: 800; color: #fff; line-height: 1; }
+.stat-label { font-size: 0.7rem; color: rgba(255,255,255,0.7); font-weight: 400; margin-top: 4px; }
+
+/* ===== ATALHOS RÁPIDOS ===== */
+.atalhos {
+  background: var(--branco);
+  padding: 0 40px;
+  border-bottom: 1px solid var(--cinza-borda);
+}
+.atalhos-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  max-width: 1100px;
+  margin: 0 auto;
+  transform: translateY(-28px);
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 40px var(--sombra);
+  overflow: hidden;
+  border: 1.5px solid var(--cinza-borda);
+}
+.atalho-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 28px 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  border-right: 1px solid var(--cinza-borda);
+  position: relative;
+}
+.atalho-item:last-child { border-right: none; }
+.atalho-item:hover { background: var(--verde-leve); }
+.atalho-item:hover .atalho-icon { background: var(--verde); }
+.atalho-item:hover .atalho-icon svg { stroke: #fff; }
+.atalho-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--verde-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.atalho-icon svg { width: 24px; height: 24px; stroke: var(--verde); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: all 0.2s; }
+.atalho-nome { font-size: 0.8rem; font-weight: 700; color: var(--texto); text-align: center; }
+.atalho-desc { font-size: 0.7rem; color: var(--texto-leve); text-align: center; line-height: 1.3; }
+
+/* ===== SEÇÕES GERAIS ===== */
+section { padding: 64px 40px; }
+.section-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--verde);
+  margin-bottom: 8px;
+}
+.section-title {
+  font-family: 'Lora', serif;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  color: var(--texto);
+  line-height: 1.25;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+.section-sub {
+  color: var(--texto-leve);
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.6;
+  max-width: 560px;
+  margin-bottom: 40px;
+}
+.container { max-width: 1100px; margin: 0 auto; }
+
+/* ===== PLANOS ===== */
+.planos-bg { background: var(--cinza-bg); }
+.planos-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.tab-btn {
+  padding: 10px 22px;
+  border-radius: 50px;
+  border: 2px solid var(--cinza-borda);
+  background: #fff;
+  color: var(--texto-leve);
+  font-family: 'Sora', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.tab-btn:hover, .tab-btn.ativo {
+  background: var(--verde);
+  color: #fff;
+  border-color: var(--verde);
+}
+.planos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.plano-card {
+  background: #fff;
+  border-radius: 16px;
+  border: 2px solid var(--cinza-borda);
+  overflow: hidden;
+  transition: all 0.25s;
+}
+.plano-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px var(--sombra); border-color: var(--verde); }
+.plano-card.destaque { border-color: var(--verde); position: relative; }
+.plano-card.destaque::before {
+  content: 'Mais popular';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  background: var(--verde);
+  color: #fff;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 6px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.plano-header {
+  padding: 28px 24px 20px;
+  background: linear-gradient(135deg, var(--verde-leve), var(--verde-bg));
+}
+.plano-card.destaque .plano-header { padding-top: 38px; }
+.plano-nome { font-size: 1.15rem; font-weight: 800; color: var(--texto); margin-bottom: 4px; }
+.plano-tipo { font-size: 0.75rem; color: var(--texto-leve); font-weight: 400; }
+.plano-corpo { padding: 24px; }
+.plano-abrangencia {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--verde-bg);
+  color: var(--verde);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 50px;
+  margin-bottom: 16px;
+}
+.plano-features { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 22px; }
+.plano-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--texto-leve);
+  line-height: 1.4;
+}
+.plano-features li::before {
+  content: 'v';
+  font-family: 'Sora', sans-serif;
+  font-weight: 800;
+  color: var(--verde);
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-size: 0.75rem;
+}
+.btn-plano {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: var(--verde);
+  color: #fff;
+  padding: 13px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: background 0.2s;
+  border: none;
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+}
+.btn-plano:hover { background: var(--verde-escuro); }
+.btn-plano.secundario {
+  background: transparent;
+  color: var(--verde);
+  border: 2px solid var(--verde);
+}
+.btn-plano.secundario:hover { background: var(--verde); color: #fff; }
+
+/* ===== SERVIÇOS ===== */
+.servicos-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.servico-card {
+  background: #fff;
+  border: 1.5px solid var(--cinza-borda);
+  border-radius: 14px;
+  padding: 28px 22px;
+  transition: all 0.22s;
+  cursor: pointer;
+}
+.servico-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 32px var(--sombra);
+  border-color: var(--verde-claro);
+}
+.servico-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--verde-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.servico-icon svg { width: 26px; height: 26px; stroke: var(--verde); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.servico-nome { font-size: 0.95rem; font-weight: 700; color: var(--texto); margin-bottom: 6px; }
+.servico-desc { font-size: 0.78rem; color: var(--texto-leve); line-height: 1.5; }
+
+/* ===== DOCUMENTACAO (ex Nosso Time) ===== */
+.time-bg { background: var(--cinza-bg); }
+.time-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+}
+.membro-card {
+  background: #fff;
+  border-radius: 16px;
+  border: 1.5px solid var(--cinza-borda);
+  overflow: hidden;
+  transition: all 0.25s;
+  text-align: center;
+}
+.membro-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 36px var(--sombra);
+}
+.membro-foto {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: var(--verde-bg);
+  margin: 28px auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid var(--cinza-borda);
+  overflow: hidden;
+}
+.membro-foto svg { width: 48px; height: 48px; stroke: var(--verde); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.membro-nome {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--texto);
+  padding: 0 20px;
+  margin-bottom: 4px;
+}
+.membro-cargo {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--verde);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0 20px;
+  margin-bottom: 14px;
+}
+.membro-divider {
+  height: 1px;
+  background: var(--cinza-borda);
+  margin: 0 20px 14px;
+}
+.membro-curiosidade {
+  font-size: 0.78rem;
+  color: var(--texto-leve);
+  line-height: 1.55;
+  padding: 0 20px 24px;
+}
+
+/* ===== NOTÍCIAS ===== */
+.noticias-bg { background: var(--cinza-bg); }
+.noticias-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  gap: 20px;
+}
+.noticia-card {
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1.5px solid var(--cinza-borda);
+  transition: all 0.22s;
+  cursor: pointer;
+}
+.noticia-card:hover { transform: translateY(-4px); box-shadow: 0 10px 32px var(--sombra); }
+.noticia-img {
+  height: 200px;
+  background: linear-gradient(135deg, var(--verde-bg), var(--cinza-borda));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.noticia-img svg { width: 56px; height: 56px; stroke: var(--verde-claro); fill: none; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
+.noticia-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.12));
+}
+.noticia-card.grande .noticia-img { height: 280px; }
+.noticia-corpo { padding: 20px; }
+.noticia-tag {
+  display: inline-block;
+  background: var(--verde-bg);
+  color: var(--verde);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+.noticia-titulo { font-size: 0.95rem; font-weight: 700; color: var(--texto); line-height: 1.4; margin-bottom: 8px; }
+.noticia-card.grande .noticia-titulo { font-size: 1.15rem; }
+.noticia-data { font-size: 0.72rem; color: var(--texto-leve); }
+
+/* ===== CONTATOS ===== */
+.contatos-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.contato-card {
+  background: var(--verde-leve);
+  border: 1.5px solid var(--cinza-borda);
+  border-radius: 14px;
+  padding: 28px 22px;
+  text-align: center;
+}
+.contato-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--verde-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+}
+.contato-icon svg { width: 24px; height: 24px; stroke: var(--verde); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.contato-titulo { font-size: 0.9rem; font-weight: 700; color: var(--texto); margin-bottom: 6px; }
+.contato-info { font-size: 0.82rem; color: var(--texto-leve); line-height: 1.5; }
+.contato-info strong { color: var(--verde); display: block; font-size: 1.05rem; margin-top: 4px; }
+.contato-horario { font-size: 0.7rem; color: var(--texto-leve); margin-top: 4px; }
+.btn-contato {
+  display: inline-block;
+  margin-top: 14px;
+  background: var(--verde);
+  color: #fff;
+  padding: 9px 20px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.btn-contato:hover { background: var(--verde-escuro); }
+
+/* ===== CTA BANNER ===== */
+.cta-banner {
+  background: linear-gradient(135deg, var(--verde-escuro), var(--verde));
+  padding: 64px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-banner::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  border: 80px solid rgba(255,255,255,0.04);
+  pointer-events: none;
+}
+.cta-banner h2 {
+  font-family: 'Lora', serif;
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  color: #fff;
+  margin-bottom: 16px;
+  font-weight: 600;
+  position: relative;
+}
+.cta-banner p {
+  color: rgba(255,255,255,0.75);
+  font-size: 1rem;
+  font-weight: 300;
+  margin-bottom: 32px;
+  position: relative;
+}
+.cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; }
+.btn-cta-white {
+  background: #fff;
+  color: var(--verde);
+  padding: 14px 32px;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-cta-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+.btn-cta-outline {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.5);
+  padding: 14px 32px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-cta-outline:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--texto);
+  color: rgba(255,255,255,0.65);
+  padding: 56px 40px 28px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr 1fr 1fr;
+  gap: 40px;
+  max-width: 1100px;
+  margin: 0 auto 40px;
+}
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.footer-logo-icon {
+  width: 38px;
+  height: 38px;
+  background: var(--verde);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.footer-logo-icon svg { width: 22px; height: 22px; fill: white; }
+.footer-logo-text { font-size: 0.95rem; font-weight: 800; color: #fff; }
+.footer-brand p { font-size: 0.82rem; line-height: 1.65; max-width: 280px; margin-bottom: 20px; }
+.footer-social { display: flex; gap: 10px; flex-wrap: wrap; }
+.social-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: #fff;
+}
+.social-btn:hover { background: var(--verde); }
+.footer-col h4 { color: #fff; font-size: 0.85rem; font-weight: 700; margin-bottom: 16px; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.footer-col ul li a {
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  font-size: 0.8rem;
+  transition: color 0.2s;
+}
+.footer-col ul li a:hover { color: #fff; }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  max-width: 1100px;
+  margin: 0 auto;
+  font-size: 0.75rem;
+}
+.footer-bottom a { color: rgba(255,255,255,0.5); text-decoration: none; }
+.footer-bottom a:hover { color: #fff; }
+
+/* ===== TABLET (max 1024px) ===== */
+@media (max-width: 1024px) {
+  nav { padding: 0 24px; }
+  .logo-wrap { margin-right: 20px; }
+  .nav-link { padding: 0 12px; font-size: 0.78rem; }
+  .nav-cta { padding-left: 12px; gap: 8px; }
+  .btn-outline, .btn-solid { padding: 8px 14px; font-size: 0.75rem; }
+
+  .hero { padding: 48px 24px; }
+  section { padding: 56px 24px; }
+  .atalhos { padding: 0 24px; }
+  .cta-banner { padding: 56px 24px; }
+  footer { padding: 48px 24px 24px; }
+  .topbar { padding: 6px 24px; }
+  .alerta-banner { padding: 12px 24px; }
+
+  .servicos-grid { grid-template-columns: repeat(2, 1fr); }
+  .planos-grid { grid-template-columns: repeat(2, 1fr); }
+  .contatos-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .noticias-grid { grid-template-columns: 1fr 1fr; }
+  .noticia-card.grande { grid-column: 1 / -1; }
+  .atalhos-grid { grid-template-columns: repeat(3, 1fr); transform: translateY(-20px); }
+}
+
+/* ===== MOBILE (max 768px) ===== */
+@media (max-width: 768px) {
+  nav { padding: 0 16px; flex-wrap: wrap; }
+  .logo-wrap { margin-right: 0; padding: 12px 0; flex: 1; }
+  .nav-links { display: none; }
+  .nav-cta { display: none; }
+  .hamburger { display: flex; }
+
+  .topbar { padding: 6px 16px; font-size: 0.7rem; gap: 6px; }
+  .topbar-links { gap: 10px; }
+  .alerta-banner { padding: 12px 16px; font-size: 0.78rem; }
+
+  .hero { padding: 40px 16px; min-height: auto; }
+  .hero-stats { gap: 20px; }
+  .stat-num { font-size: 1.6rem; }
+
+  .atalhos { padding: 0 16px; }
+  .atalhos-grid {
+    grid-template-columns: repeat(3, 1fr);
+    transform: translateY(-16px);
+    border-radius: 12px;
+  }
+  .atalho-item { padding: 18px 8px; gap: 6px; }
+  .atalho-icon { width: 44px; height: 44px; border-radius: 10px; }
+  .atalho-desc { display: none; }
+
+  section { padding: 48px 16px; }
+  .planos-grid { grid-template-columns: 1fr; }
+  .servicos-grid { grid-template-columns: repeat(2, 1fr); }
+  .noticias-grid { grid-template-columns: 1fr; }
+  .noticia-card.grande { grid-column: auto; }
+  .contatos-grid { grid-template-columns: repeat(2, 1fr); }
+  .time-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+
+  .cta-banner { padding: 48px 16px; }
+  footer { padding: 40px 16px 20px; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
+}
+
+/* ===== MOBILE PEQUENO (max 480px) ===== */
+@media (max-width: 480px) {
+  .topbar { justify-content: center; }
+  .topbar-links:first-child { display: none; }
+
+  .atalhos-grid { grid-template-columns: repeat(2, 1fr); transform: translateY(-14px); }
+  .atalho-item:nth-child(2n) { border-right: none; }
+  .atalho-item:nth-child(1),
+  .atalho-item:nth-child(2) { border-bottom: 1px solid var(--cinza-borda); }
+  .atalho-item:nth-child(3),
+  .atalho-item:nth-child(4) { border-bottom: 1px solid var(--cinza-borda); }
+
+  .servicos-grid { grid-template-columns: 1fr; }
+  .contatos-grid { grid-template-columns: 1fr; }
+  .time-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom div:last-child { flex-wrap: wrap; gap: 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-links">
+    <a href="#">Espaco Cliente</a>
+    <a href="#">Ouvidoria</a>
+    <a href="#">Informacoes</a>
+    <a href="#">Revista MedLife</a>
+    <a href="#">ANS</a>
+  </div>
+  <div class="topbar-links">
+    <a href="#">Whatsapp: (83) 2101-6500</a>
+    <a href="#">(83) 2101-6550</a>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav>
+  <a class="logo-wrap" href="#">
+    <div class="logo-icon">
+      <svg viewBox="0 0 40 40"><path d="M20 4 L20 36 M4 20 L36 20" stroke="white" stroke-width="7" stroke-linecap="round" fill="none"/></svg>
+    </div>
+    <div class="logo-text">
+      MedLife
+      <span>Campina Grande</span>
+    </div>
+  </a>
+
+  <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="nav-links">
+    <a class="nav-link ativo" href="#">Inicio</a>
+    <a class="nav-link" href="#">Planos</a>
+    <a class="nav-link" href="#">Servicos</a>
+    <a class="nav-link" href="#">Guia Medico</a>
+    <a class="nav-link" href="#documentacao">Documentacao</a>
+    <a class="nav-link" href="#">Noticias</a>
+    <a class="nav-link" href="#">Contato</a>
+  </div>
+
+  <div class="nav-cta">
+    <a class="btn-outline" href="#">Espaco Cliente</a>
+    <a class="btn-solid" href="#">Quero ter MedLife</a>
+  </div>
+
+  <!-- Mobile drawer -->
+  <div class="nav-mobile" id="navMobile">
+    <a class="nav-link ativo" href="#">Inicio</a>
+    <a class="nav-link" href="#">Planos</a>
+    <a class="nav-link" href="#">Servicos</a>
+    <a class="nav-link" href="#">Guia Medico</a>
+    <a class="nav-link" href="#documentacao">Documentacao</a>
+    <a class="nav-link" href="#">Noticias</a>
+    <a class="nav-link" href="#">Contato</a>
+    <div class="nav-mobile-cta">
+      <a class="btn-outline" href="#">Espaco Cliente</a>
+      <a class="btn-solid" href="#">Quero ter MedLife</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ALERTA -->
+<div class="alerta-banner">
+  <span class="alerta-icon">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8a5500" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+  </span>
+  <div><strong>Atencao - Boletos Falsos:</strong> A MedLife nao envia boletos por WhatsApp ou e-mail sem solicitacao. Confirme sempre pelo canal oficial. <a href="#" style="color:#8a5500;font-weight:700;">Saiba mais</a></div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Lider de mercado na Paraiba ha mais de 50 anos</div>
+    <h1>Cuidando de voce<br><em>com excelencia</em> e<br>dedicacao</h1>
+    <p>A MedLife Campina Grande atende com qualidade, etica e credibilidade. Somos a clinica lider na regiao, com 70% de participacao de mercado.</p>
+    <div class="hero-btns">
+      <a class="btn-hero-primary" href="#">Conhecer planos</a>
+      <a class="btn-hero-secondary" href="#">Acessar Espaco Cliente</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">70%</div>
+      <div class="stat-label">Participacao<br>de mercado</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">50+</div>
+      <div class="stat-label">Anos no<br>mercado</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">114k</div>
+      <div class="stat-label">Medicos<br>parceiros</div>
+    </div>
+  </div>
+</div>
+
+<!-- ATALHOS RÁPIDOS -->
+<div class="atalhos">
+  <div class="atalhos-grid">
+    <a class="atalho-item" href="#">
+      <div class="atalho-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      </div>
+      <div class="atalho-nome">Autorizacao</div>
+      <div class="atalho-desc">Solicite procedimentos online</div>
+    </a>
+    <a class="atalho-item" href="#">
+      <div class="atalho-icon">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </div>
+      <div class="atalho-nome">2a Via Boleto</div>
+      <div class="atalho-desc">Acesse sua fatura</div>
+    </a>
+    <a class="atalho-item" href="#">
+      <div class="atalho-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <div class="atalho-nome">Guia Medico</div>
+      <div class="atalho-desc">Encontre medicos e clinicas</div>
+    </a>
+    <a class="atalho-item" href="#">
+      <div class="atalho-icon">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.6 19.79 19.79 0 01.01.93 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14v2.92z"/></svg>
+      </div>
+      <div class="atalho-nome">Fale Conosco</div>
+      <div class="atalho-desc">Central de atendimento</div>
+    </a>
+    <a class="atalho-item" href="#">
+      <div class="atalho-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <div class="atalho-nome">Reembolso</div>
+      <div class="atalho-desc">Solicite seu reembolso</div>
+    </a>
+  </div>
+</div>
+
+<!-- PLANOS -->
+<section class="planos-bg">
+  <div class="container">
+    <div class="section-label">Nossos Planos</div>
+    <div class="section-title">Saude para voce,<br>familia ou empresa</div>
+    <p class="section-sub">Temos opcoes de planos ambulatoriais e hospitalares com cobertura municipal, estadual e nacional. Escolha o que melhor se adapta a sua necessidade.</p>
+    <div class="planos-tabs">
+      <button class="tab-btn ativo" onclick="setTab(this,'pf')">Para voce e familia</button>
+      <button class="tab-btn" onclick="setTab(this,'pj')">Para empresas</button>
+    </div>
+    <div class="planos-grid" id="planos-pf">
+      <div class="plano-card">
+        <div class="plano-header">
+          <div class="plano-nome">MedLife Municipal</div>
+          <div class="plano-tipo">Ambulatorial + Hospitalar com Obstetricia</div>
+        </div>
+        <div class="plano-corpo">
+          <div class="plano-abrangencia">Campina Grande</div>
+          <ul class="plano-features">
+            <li>Cobertura ambulatorial completa</li>
+            <li>Internacao hospitalar com obstetricia</li>
+            <li>Acomodacao em enfermaria ou apartamento</li>
+            <li>Rede credenciada em Campina Grande</li>
+          </ul>
+          <a href="#" class="btn-plano secundario">Quero saber mais</a>
+        </div>
+      </div>
+      <div class="plano-card destaque">
+        <div class="plano-header">
+          <div class="plano-nome">MedLife Estadual</div>
+          <div class="plano-tipo">Ambulatorial + Hospitalar com Obstetricia</div>
+        </div>
+        <div class="plano-corpo">
+          <div class="plano-abrangencia">Todo o estado da Paraiba</div>
+          <ul class="plano-features">
+            <li>Cobertura em toda a Paraiba</li>
+            <li>Internacao hospitalar com obstetricia</li>
+            <li>Coparticipacao de 20% para SADT</li>
+            <li>Desconto especial para dependentes</li>
+            <li>Acesso a rede nacional parceira</li>
+          </ul>
+          <a href="#" class="btn-plano">Quero contratar</a>
+        </div>
+      </div>
+      <div class="plano-card">
+        <div class="plano-header">
+          <div class="plano-nome">MedLife Nacional</div>
+          <div class="plano-tipo">Cobertura em todo o Brasil</div>
+        </div>
+        <div class="plano-corpo">
+          <div class="plano-abrangencia">Brasil inteiro</div>
+          <ul class="plano-features">
+            <li>Atendimento em todo o territorio nacional</li>
+            <li>Rede de 84% do Brasil coberta</li>
+            <li>Internacao em enfermaria ou apartamento</li>
+            <li>Ideal para quem viaja frequentemente</li>
+          </ul>
+          <a href="#" class="btn-plano secundario">Quero saber mais</a>
+        </div>
+      </div>
+    </div>
+    <div class="planos-grid" id="planos-pj" style="display:none">
+      <div class="plano-card">
+        <div class="plano-header">
+          <div class="plano-nome">Plano Empresarial Basico</div>
+          <div class="plano-tipo">Para empresas com ate 29 vidas</div>
+        </div>
+        <div class="plano-corpo">
+          <div class="plano-abrangencia">Campina Grande</div>
+          <ul class="plano-features">
+            <li>Cobertura ambulatorial e hospitalar</li>
+            <li>Gestao de saude corporativa</li>
+            <li>Suporte dedicado ao RH</li>
+          </ul>
+          <a href="#" class="btn-plano secundario">Quero saber mais</a>
+        </div>
+      </div>
+      <div class="plano-card destaque">
+        <div class="plano-header">
+          <div class="plano-nome">Plano Empresarial Plus</div>
+          <div class="plano-tipo">Para empresas com 30+ vidas</div>
+        </div>
+        <div class="plano-corpo">
+          <div class="plano-abrangencia">Paraiba e Nacional</div>
+          <ul class="plano-features">
+            <li>Cobertura estadual ou nacional</li>
+            <li>Programas de saude preventiva</li>
+            <li>Telemedicina inclusa</li>
+            <li>Relatorios de utilizacao</li>
+          </ul>
+          <a href="#" class="btn-plano">Quero contratar</a>
+        </div>
+      </div>
+      <div class="plano-card">
+        <div class="plano-header">
+          <div class="plano-nome">Plano MEI / Autonomo</div>
+          <div class="plano-tipo">Profissional liberal e MEI</div>
+        </div>
+        <div class="plano-corpo">
+          <div class="plano-abrangencia">Campina Grande</div>
+          <ul class="plano-features">
+            <li>Condicoes especiais para autonomos</li>
+            <li>Cobertura ambulatorial e hospitalar</li>
+            <li>Flexibilidade de pagamento</li>
+          </ul>
+          <a href="#" class="btn-plano secundario">Quero saber mais</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section>
+  <div class="container">
+    <div class="section-label">Servicos ao Cliente</div>
+    <div class="section-title">Tudo o que voce precisa<br>em um so lugar</div>
+    <p class="section-sub">Acesse servicos online, aplicativo, central telefonica e muito mais com praticidade e seguranca.</p>
+    <div class="servicos-grid">
+      <div class="servico-card">
+        <div class="servico-icon">
+          <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
+        </div>
+        <div class="servico-nome">Aplicativo MedLife</div>
+        <div class="servico-desc">Acesse boletos, autorizacoes, guia medico e muito mais direto no celular.</div>
+      </div>
+      <div class="servico-card">
+        <div class="servico-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/></svg>
+        </div>
+        <div class="servico-nome">Espaco Cliente Online</div>
+        <div class="servico-desc">Portal completo para clientes: 2a via, autorizacoes, reembolso e agendamentos.</div>
+      </div>
+      <div class="servico-card">
+        <div class="servico-icon">
+          <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        </div>
+        <div class="servico-nome">Telemedicina</div>
+        <div class="servico-desc">Consultas por videochamada com medicos especialistas, sem sair de casa.</div>
+      </div>
+      <div class="servico-card">
+        <div class="servico-icon">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <div class="servico-nome">Guia Medico</div>
+        <div class="servico-desc">Encontre medicos, clinicas, hospitais e laboratorios credenciados.</div>
+      </div>
+      <div class="servico-card">
+        <div class="servico-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <div class="servico-nome">Autorizacao Online</div>
+        <div class="servico-desc">Solicite e acompanhe autorizacoes de procedimentos de forma rapida e simples.</div>
+      </div>
+      <div class="servico-card">
+        <div class="servico-icon">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        </div>
+        <div class="servico-nome">Reembolso</div>
+        <div class="servico-desc">Solicite o reembolso de despesas medicas realizadas fora da rede credenciada.</div>
+      </div>
+      <div class="servico-card">
+        <div class="servico-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="servico-nome">Rede Assistencial</div>
+        <div class="servico-desc">Conheca todos os hospitais, clinicas e laboratorios da nossa rede em CG.</div>
+      </div>
+      <div class="servico-card">
+        <div class="servico-icon">
+          <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        </div>
+        <div class="servico-nome">Revista MedLife</div>
+        <div class="servico-desc">Acesse nossa publicacao oficial com dicas de saude e bem-estar para voce.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOCUMENTACAO (ex Nosso Time) -->
+<section class="time-bg" id="documentacao">
+  <div class="container">
+    <div class="section-label">Documentacao</div>
+    <div class="section-title">Conheca quem cuida<br>da sua saude</div>
+    <p class="section-sub">Nossa equipe e formada por profissionais dedicados, com anos de experiencia e comprometimento com o cuidado humanizado.</p>
+    <div class="time-grid">
+
+      <div class="membro-card">
+        <div class="membro-foto">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div class="membro-nome">Dr. Nome Aqui</div>
+        <div class="membro-cargo">Clinico Geral</div>
+        <div class="membro-divider"></div>
+        <div class="membro-curiosidade">Adicione aqui uma curiosidade ou apresentacao breve sobre este membro.</div>
+      </div>
+
+      <div class="membro-card">
+        <div class="membro-foto">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div class="membro-nome">Dra. Nome Aqui</div>
+        <div class="membro-cargo">Cardiologista</div>
+        <div class="membro-divider"></div>
+        <div class="membro-curiosidade">Adicione aqui uma curiosidade ou apresentacao breve sobre este membro.</div>
+      </div>
+
+      <div class="membro-card">
+        <div class="membro-foto">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div class="membro-nome">Dr. Nome Aqui</div>
+        <div class="membro-cargo">Pediatra</div>
+        <div class="membro-divider"></div>
+        <div class="membro-curiosidade">Adicione aqui uma curiosidade ou apresentacao breve sobre este membro.</div>
+      </div>
+
+      <div class="membro-card">
+        <div class="membro-foto">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div class="membro-nome">Dra. Nome Aqui</div>
+        <div class="membro-cargo">Psiquiatra</div>
+        <div class="membro-divider"></div>
+        <div class="membro-curiosidade">Adicione aqui uma curiosidade ou apresentacao breve sobre este membro.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- NOTÍCIAS -->
+<section>
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:32px">
+      <div>
+        <div class="section-label">Central de Noticias</div>
+        <div class="section-title" style="margin-bottom:0">Fique por dentro<br>das novidades</div>
+      </div>
+      <a href="#" class="btn-outline">Ver todas as noticias</a>
+    </div>
+    <div class="noticias-grid">
+      <div class="noticia-card grande">
+        <div class="noticia-img">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <div class="noticia-corpo">
+          <span class="noticia-tag">Parceria</span>
+          <div class="noticia-titulo">MedLife celebra mais uma parceria vitoriosa com instituicoes de saude da Paraiba</div>
+          <div class="noticia-data">07 de Maio de 2026</div>
+        </div>
+      </div>
+      <div class="noticia-card">
+        <div class="noticia-img">
+          <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <div class="noticia-corpo">
+          <span class="noticia-tag">Saude</span>
+          <div class="noticia-titulo">Campanha de prevencao ao cancer de pele reforca cuidados no verao</div>
+          <div class="noticia-data">02 de Abril de 2026</div>
+        </div>
+      </div>
+      <div class="noticia-card">
+        <div class="noticia-img">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div class="noticia-corpo">
+          <span class="noticia-tag">Qualidade</span>
+          <div class="noticia-titulo">MedLife recebe certificacao de qualidade ANS pelo terceiro ano consecutivo</div>
+          <div class="noticia-data">18 de Marco de 2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATOS -->
+<section style="background:var(--cinza-bg)">
+  <div class="container">
+    <div class="section-label">Canais de Atendimento</div>
+    <div class="section-title">Como falar com a gente</div>
+    <p class="section-sub">Estamos disponiveis por varios canais para atender voce com agilidade e qualidade.</p>
+    <div class="contatos-grid">
+      <div class="contato-card">
+        <div class="contato-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.6 19.79 19.79 0 01.01.93 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14v2.92z"/></svg>
+        </div>
+        <div class="contato-titulo">Central Telefonica</div>
+        <div class="contato-info">
+          Atendimento geral
+          <strong>(83) 2101-6550</strong>
+        </div>
+        <div class="contato-horario">Seg. a sex. 08h as 17h</div>
+      </div>
+      <div class="contato-card">
+        <div class="contato-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        </div>
+        <div class="contato-titulo">WhatsApp</div>
+        <div class="contato-info">
+          Todos os dias, 24h
+          <strong>(83) 2101-6500</strong>
+        </div>
+        <a class="btn-contato" href="https://wa.me/558321016500" target="_blank">Abrir WhatsApp</a>
+      </div>
+      <div class="contato-card">
+        <div class="contato-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/></svg>
+        </div>
+        <div class="contato-titulo">Espaco Cliente Online</div>
+        <div class="contato-info">
+          Portal digital completo
+          <strong>24 horas por dia</strong>
+        </div>
+        <a class="btn-contato" href="#">Acessar portal</a>
+      </div>
+      <div class="contato-card">
+        <div class="contato-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <div class="contato-titulo">Ouvidoria</div>
+        <div class="contato-info">
+          Sugestoes e reclamacoes
+          <strong>Queremos ouvir voce</strong>
+        </div>
+        <a class="btn-contato" href="#">Acessar ouvidoria</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-banner">
+  <h2>Ainda nao tem MedLife?</h2>
+  <p>Conheca nossos planos e proteja sua saude e de quem voce ama. Atendimento em Campina Grande, Lagoa Seca e Queimadas.</p>
+  <div class="cta-btns">
+    <a href="#" class="btn-cta-white">Quero ter MedLife</a>
+    <a href="#" class="btn-cta-outline">Falar com consultor</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <div class="footer-logo-icon">
+          <svg viewBox="0 0 40 40"><path d="M20 4 L20 36 M4 20 L36 20" stroke="white" stroke-width="7" stroke-linecap="round" fill="none"/></svg>
+        </div>
+        <div class="footer-logo-text">MedLife Campina Grande</div>
+      </div>
+      <p>A maior clinica da Paraiba. Ha mais de 50 anos cuidando da saude com etica, qualidade e comprometimento.</p>
+      <div class="footer-social">
+        <a class="social-btn" href="#">f</a>
+        <a class="social-btn" href="#">in</a>
+        <a class="social-btn" href="#">yt</a>
+        <a class="social-btn" href="#">ig</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Servicos ao Cliente</h4>
+      <ul>
+        <li><a href="#">Espaco Cliente</a></li>
+        <li><a href="#">Ouvidoria</a></li>
+        <li><a href="#">Autorizacoes</a></li>
+        <li><a href="#">Reembolso</a></li>
+        <li><a href="#">Informacoes</a></li>
+        <li><a href="#">Tarifas</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Planos</h4>
+      <ul>
+        <li><a href="#">Para voce e familia</a></li>
+        <li><a href="#">Para empresas</a></li>
+        <li><a href="#">Quero ter MedLife</a></li>
+        <li><a href="#">Planos suspensos</a></li>
+        <li><a href="#">Rede credenciada</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Institucional</h4>
+      <ul>
+        <li><a href="#">Sobre a MedLife</a></li>
+        <li><a href="#">Noticias</a></li>
+        <li><a href="#documentacao">Documentacao</a></li>
+        <li><a href="#">Transparencia</a></li>
+        <li><a href="#">Demonstracoes Contabeis</a></li>
+        <li><a href="#">Trabalhe conosco</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>2026 MedLife Campina Grande - Todos os direitos reservados</div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap">
+      <a href="#">Politica de Privacidade</a>
+      <a href="#">Termos de Uso</a>
+      <a href="#">ANS</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+function setTab(btn, tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('ativo'));
+  btn.classList.add('ativo');
+  document.getElementById('planos-pf').style.display = tab === 'pf' ? 'grid' : 'none';
+  document.getElementById('planos-pj').style.display = tab === 'pj' ? 'grid' : 'none';
+}
+
+// Hamburger menu
+const hamburger = document.getElementById('hamburger');
+const navMobile = document.getElementById('navMobile');
+hamburger.addEventListener('click', () => {
+  const aberto = navMobile.classList.toggle('aberto');
+  hamburger.classList.toggle('aberto', aberto);
+  hamburger.setAttribute('aria-expanded', aberto);
+});
+
+// Fecha menu ao clicar em link
+navMobile.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    navMobile.classList.remove('aberto');
+    hamburger.classList.remove('aberto');
+    hamburger.setAttribute('aria-expanded', false);
+  });
+});
+</script>
+
+</body>
+</html>
