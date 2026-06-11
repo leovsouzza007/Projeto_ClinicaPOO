@@ -1,6 +1,6 @@
 # Projeto_ClinicaPOO
 
--TODO CODIGO ESTA NA BRANCH MASTER/->clinica medica/->SRC
+-TODO CODIGO ESTA NA BRANCH MASTER/->clinica medica/->SRC/->principal/->Java.  lá estará todos os codigos da CLINICA.
 
 ## 🚀 Como acessar
 
