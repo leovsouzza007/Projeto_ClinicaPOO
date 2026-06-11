@@ -1,1 +1,0 @@
-package exception; public class EntidadeNaoEncontradaException extends Exception{ public EntidadeNaoEncontradaException(String m){super(m);} }
