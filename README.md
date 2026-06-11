@@ -1,5 +1,7 @@
 # Projeto_ClinicaPOO
 
+-TODO CODIGO ESTA NA BRANCH MASTER
+
 ## 🚀 Como acessar
 
 1. Abra o link público do Google Sites.
@@ -29,10 +31,10 @@ Desenvolvido por **Fabricio Samuel**.
 Desenvolvido por **Leonardo Vieira**.
 Desenvolvido por **Weslley Gomes**.
 Desenvolvido por **Gabriel Borges**.
-
+Dsenvolvido por **Paulo Eduardo**.
 
 - GitHub: [@Samuell7x]
--  GitHub: [@biellgsz]
+-  GitHub: [@bielbgsz]
 -   GitHub: [@uejii]
 -    GitHub: [@leovsouzza007]
 
