@@ -1,0 +1,1 @@
+package exception; public class AgendamentoInvalidoException extends Exception{ public AgendamentoInvalidoException(String m){super(m);} }
